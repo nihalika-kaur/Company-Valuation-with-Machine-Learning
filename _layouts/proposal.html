@@ -1,0 +1,40 @@
+---
+layout: default
+---
+
+<article class="proposal-report">
+    <header class="proposal-header">
+        <h1>{{ page.title }}</h1>
+        {% if page.subtitle %}
+        <p class="proposal-subtitle no-indent">{{ page.subtitle }}</p>
+        {% endif %}
+        {% if page.date %}
+        <p class="proposal-date no-indent">Submitted: {{ page.date | date: "%B %d, %Y" }}</p>
+        {% endif %}
+    </header>
+
+    <div class="proposal-content">
+        {{ content }}
+    </div>
+
+    <div class="word-count">
+        <p class="no-indent"><strong>Word Count:</strong> <span id="word-count">Calculating...</span> / 800 words</p>
+    </div>
+</article>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const content = document.querySelector('.proposal-content');
+    const text = content.textContent || content.innerText || '';
+    const wordCount = text.trim().split(/\s+/).filter(word => word.length > 0).length;
+    document.getElementById('word-count').textContent = wordCount;
+    
+    if (wordCount > 800) {
+        document.getElementById('word-count').style.color = '#e74c3c';
+    } else if (wordCount > 700) {
+        document.getElementById('word-count').style.color = '#f39c12';
+    } else {
+        document.getElementById('word-count').style.color = '#27ae60';
+    }
+});
+</script>
